@@ -1,3 +1,5 @@
 node_modules/
 .idea/
 dist/
+
+src/config/secrets.ts
