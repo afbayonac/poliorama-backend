@@ -2,4 +2,7 @@ node_modules/
 .idea/
 dist/
 
-src/config/secrets.ts
+.env
+.env.development
+.env.staging
+.env.production
