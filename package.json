@@ -35,6 +35,7 @@
   "homepage": "https://github.com/afbayonac/poliorama-backend#readme",
   "dependencies": {
     "@types/keyv": "^3.1.1",
+    "arangojs": "^6.13.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
