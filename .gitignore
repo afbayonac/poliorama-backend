@@ -2,7 +2,7 @@ node_modules/
 .idea/
 dist/
 
-.env
 .env.development
 .env.staging
 .env.production
+.env.test

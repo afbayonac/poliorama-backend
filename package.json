@@ -7,10 +7,11 @@
     "start": "NODE_ENV=development DEBUG=express:* nodemon",
     "build:staging": "NODE_ENV=staging tsc",
     "build": "NODE_ENV=prodcution tsc",
-    "test": "mocha -r ts-node/register ./src/**/*.spec.ts",
+    "test": "NODE_ENV=test mocha -r ts-node/register ./src/**/*.spec.ts",
     "deploy:dev": ""
   },
   "mocha": {
+    "exit": true,
     "reporter": "nyan",
     "full-trace": false
   },
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@types/chai": "^4.2.9",
     "@types/cors": "^2.8.6",
+    "@types/dirty-chai": "^2.0.2",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.2",
     "@types/mocha": "^7.0.1",
@@ -57,6 +59,7 @@
     "@typescript-eslint/eslint-plugin": "^2.19.0",
     "@typescript-eslint/parser": "^2.19.0",
     "chai": "^4.2.0",
+    "dirty-chai": "^2.0.1",
     "eslint": "^6.8.0",
     "eslint-config-standard": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
