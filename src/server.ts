@@ -1,6 +1,11 @@
 import app from './app'
 import { PORT } from './config/constants'
+import { createServer } from 'http'
+
+const server = createServer(app)
 
 app.on('databaseIsReady', () => {
-  app.listen(PORT, () => { console.log(`Listening to port ${PORT}`) })
+  server.listen(PORT, () => { console.log(`Poliorama backend is running to port ${PORT}`) })
 })
+
+export default server

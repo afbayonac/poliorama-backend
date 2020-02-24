@@ -14,7 +14,6 @@ const corsOption = {
   exposedHeaders: ['x-auth-token']
 }
 
-
 class App {
   public app: Application
 
@@ -28,12 +27,12 @@ class App {
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(cors(corsOption)) // TODO: this should be limit in production
+    this.app.use('/api', oauth)
     this.app.use('/', (_, response: Response) => {
       response
         .status(200)
         .json({ message: 'Poliorama API REST is running' })
     })
-    this.app.use('/api', oauth)
     this.configClientDatabase()
   }
 

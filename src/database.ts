@@ -1,4 +1,5 @@
 import { Database } from 'arangojs'
 
-// TODO: pass config
-export default new  Database()
+// TODO: Add config databa base
+
+export default new Database()
