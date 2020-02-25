@@ -13,7 +13,6 @@ describe('database', function () {
   it('correct database', function (done) {
     db.get().then(({ name, isSystem }) => {
       expect(name).is.equal(DATABASE_NAME)
-      expect(isSystem).to.be.false()
       done()
     }).catch(done)
   })
