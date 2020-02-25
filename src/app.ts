@@ -27,7 +27,7 @@ class App {
     this.app.use(bodyParser.json())
     this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(cors(corsOption)) // TODO: this should be limit in production
-    this.app.use('/api', oauth)
+    this.app.use('/oauth', oauth)
     this.app.use('/', (_, response: Response) => {
       response
         .status(200)
