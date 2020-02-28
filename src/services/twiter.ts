@@ -1,7 +1,6 @@
 import querystring from 'querystring'
-import { Request, Response, NextFunction, response } from 'express'
 import Twitter from 'twitter'
-import axios, { Method, AxiosResponse } from 'axios'
+import axios, { Method } from 'axios'
 import OAuth from 'oauth-1.0a'
 import crypto from 'crypto'
 
@@ -18,12 +17,9 @@ const oauth = new OAuth({
   }
 })
 
+// get request token { oauth_token and oauth token secret } the last should be save in server
 export const getRequestToken = async () => {
-  const request: {
-    method: Method
-    data: any
-    url: string
-  } = {
+  const request: { method: Method, data: any, url: string } = {
     method: 'POST',
     data: { oauth_callback: TWITTER_CALLBACK }, // eslint-disable-line @typescript-eslint/camelcase
     url: 'https://api.twitter.com/oauth/request_token'
@@ -37,12 +33,9 @@ export const getRequestToken = async () => {
   return querystring.decode(response.data)
 }
 
+// get the access_token twitter
 export const getAccessToken = async (oauthToken: string, oauthTokenSecret: string, oauthVerifier: string) => {
-  const request: {
-    method: Method
-    data: any
-    url: string
-  } = {
+  const request: { method: Method, data: any, url: string } = {
     url: 'https://api.twitter.com/oauth/access_token',
     method: 'POST',
     data: { oauth_verifier: oauthVerifier } // eslint-disable-line @typescript-eslint/camelcase

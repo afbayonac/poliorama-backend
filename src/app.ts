@@ -36,19 +36,27 @@ class App {
     this.configClientDatabase()
   }
 
-  private configClientDatabase (): void {
-    db.listDatabases()
-      .then(list => {
-        if (list.indexOf(DATABASE_NAME) > -1) return db.useDatabase(DATABASE_NAME)
-        return db.createDatabase(DATABASE_NAME)
-      })
-      .then(() => {
-        this.app.emit('databaseIsReady')
-      })
-      .catch(err => {
-        // TODO: handler errors
-        console.log(err)
-      })
+  private async configClientDatabase () {
+    try {
+      const list = await db.listDatabases()
+      if (list.indexOf(DATABASE_NAME) === -1) await db.createDatabase(DATABASE_NAME)
+      db.useDatabase(DATABASE_NAME)
+      const listCollections = (await db.listCollections()).map((e: {name: string}) => e.name)
+      console.log(listCollections)
+      // create user collection
+      const users = db.collection('users')
+      if (listCollections.indexOf('users') === -1) await users.create()
+      // create perimeter collection
+      const perimeters = db.collection('perimeters')
+      if (listCollections.indexOf('perimeters') === -1) await perimeters.create()
+      this.app.emit('databaseIsReady')
+    } catch (e) {
+      console.log(Object.keys(e))
+      console.log(e.errorNum)
+      console.log(e.code)
+      console.log(e.statusCode)
+      console.log(e.response)
+    }
   }
 }
 
