@@ -15,3 +15,6 @@ export const TWITTER_CALLBACK = process.env.TWITTER_CALLBACK || '' // this callb
 
 // DATABASE
 export const DATABASE_NAME = process.env.DATABASE_NAME || 'poliorama-local'
+
+// jwt
+export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY || ''

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 
 import db from './database'
 import oauth from './api/oauth/oauth'
+import user from './api/user/user'
 import { DATABASE_NAME } from './config/constants'
 
 // TODO: limit origins
@@ -28,6 +29,7 @@ class App {
     this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(cors(corsOption)) // TODO: this should be limit in production
     this.app.use('/oauth', oauth)
+    this.app.use('/user', user)
     this.app.use('/', (_, response: Response) => {
       response
         .status(200)

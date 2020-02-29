@@ -3,6 +3,7 @@ import { getAccessToken, getRequestToken, getVerifyCredentials } from '../../ser
 import oauthStoreTemporal from '../../services/oauthStoreTemporal'
 import db from '../../database'
 import { aql } from 'arangojs'
+import { encode } from '../middleware/jwt'
 
 // NOTE: save the oathTokenSecret is necessary for OAuth1 for that used oauthStoreTemporal
 // TODO: handler errors
@@ -33,8 +34,8 @@ export const oauthTwitterVerify = async (req: Request, res: Response) => {
       data.screen_name as string)
 
     const user = await upsertUser(profile)
-    console.log('user: ', user)
-    res.status(200).json({ ...data, ...profile })
+
+    res.status(200).json({ token: encode(user) })
   } catch (e) {
     if (e.isAxiosError && e.response.status === 401) {
       return res.status(401).json({ message: 'Authorization Required' })
@@ -45,7 +46,7 @@ export const oauthTwitterVerify = async (req: Request, res: Response) => {
 
 async function upsertUser (u: any) {
   // TODO: Validate user
-  // TODO: Add hash index unique twitterId
+  // TODO: Add hash index unique twitterId and screenName
   const cursor = await db.query(aql`
       UPSERT { twitterId: ${u.id_str} }
       INSERT {
@@ -54,8 +55,11 @@ async function upsertUser (u: any) {
         description: ${u.description},
         verified: ${u.verified},
         defaultProfileImage: ${u.default_profile_image},
-        pic: ${u.profile_image_url_https}
-        role: 'archivador'
+        pic: ${u.profile_image_url_https},
+        permissions: {
+          archive: true,
+          validate: true
+        }
       } 
       UPDATE { 
         screenName: ${u.screen_name},
