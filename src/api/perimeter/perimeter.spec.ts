@@ -20,16 +20,29 @@ describe('permieter', function () {
     perimeter = { ...res, ...perimeterFk }
   })
 
-  it('get perimeter by id', function (done) {
+  it('200 get perimeter by id', function (done) {
+    console.log(perimeter)
     agent
       .get(`/perimeter/${perimeter._key}`)
       .expect(200)
       .end((err, { body }) => {
         expect(err).to.be.null()
+        expect(body).to.have.property('_id', perimeter._id)
+        expect(body).to.have.property('_key', perimeter._key)
+        expect(body).to.have.property('name', perimeter.name)
+        expect(body).to.have.property('lastName', perimeter.lastName)
+        done()
+      })
+  })
+
+  it('404 get perimeter by id', function (done) {
+    agent
+      .get('/perimeter/somestring')
+      .expect(404)
+      .end((err, { body }) => {
+        expect(err).to.be.null()
         expect(body)
-          .to.have.property('_id')
-          .to.have.property('_key')
-          .to.have.property('name')
+          .to.have.property('message', 'resource no found')
         done()
       })
   })

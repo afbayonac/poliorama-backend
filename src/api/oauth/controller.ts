@@ -4,22 +4,23 @@ import oauthStoreTemporal from '../../services/oauthStoreTemporal'
 import db from '../../database'
 import { aql } from 'arangojs'
 import { encode } from '../middleware/jwt'
+import { User } from '../../models/user'
 
 // NOTE: save the oathTokenSecret is necessary for OAuth1 for that used oauthStoreTemporal
 // TODO: handler errors
 // TODO: validate body
 
-export const oauthTwitter = async (req: Request, res: Response) => {
+export const oauthTwitter = async (req: Request, res: Response): Promise<Response> => {
   try {
     const data = await getRequestToken()
     await oauthStoreTemporal.set(data.oauth_token as string, data.oauth_token_secret, 10000)
-    res.status(200).json({ oauthToken: data.oauth_token })
+    return res.status(200).json({ oauthToken: data.oauth_token })
   } catch (e) {
-    res.status(500).json({ message: 'internal Error server' })
+    return res.status(500).json({ message: 'internal Error server' })
   }
 }
 
-export const oauthTwitterVerify = async (req: Request, res: Response) => {
+export const oauthTwitterVerify = async (req: Request, res: Response): Promise<Response> => {
   try {
     const oauthToken = req.body.oauthToken
     const oauthTokenSecret = await oauthStoreTemporal.get(oauthToken)
@@ -35,16 +36,16 @@ export const oauthTwitterVerify = async (req: Request, res: Response) => {
 
     const user = await upsertUser(profile)
 
-    res.status(200).json({ token: encode(user) })
+    return res.status(200).json({ token: encode(user) })
   } catch (e) {
     if (e.isAxiosError && e.response.status === 401) {
       return res.status(401).json({ message: 'Authorization Required' })
     }
-    console.log(e)
+    throw e
   }
 }
 
-async function upsertUser (u: any) {
+async function upsertUser (u: any): Promise<User> {
   // TODO: Validate user
   // TODO: Add hash index unique twitterId and screenName
   const cursor = await db.query(aql`
