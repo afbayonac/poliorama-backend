@@ -1,10 +1,9 @@
-import { encode, decode} from './jwt'
+import { encode, decode } from './jwt'
 import { expect, use } from 'chai'
 import chaiJWT from 'chai-jwt'
 import dirtyChai from 'dirty-chai'
-import { userFk } from '../../models/user.fake'
+import { userFk } from '../../models/userFake'
 import { JWT_SECRET_KEY } from '../../config/constants'
-
 
 use(dirtyChai)
 use(chaiJWT)

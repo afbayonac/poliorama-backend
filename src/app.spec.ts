@@ -1,3 +1,6 @@
+// eslint-disable-next-line import/first
+process.env.NODE_ENV = 'test'
+
 import { expect, use } from 'chai'
 import dirtyChai from 'dirty-chai'
 import request, { Response } from 'supertest'
@@ -9,7 +12,7 @@ import { DATABASE_NAME } from './config/constants'
 const agent = request.agent(server)
 use(dirtyChai)
 
-describe('database', function () {
+describe('database 🥑', function () {
   it('correct database', function (done) {
     db.get().then(({ name, isSystem }) => {
       expect(name).is.equal(DATABASE_NAME)

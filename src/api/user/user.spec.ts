@@ -2,7 +2,7 @@ import { expect, use } from 'chai'
 import dirtyChai from 'dirty-chai'
 import request, { Response } from 'supertest'
 import server from '../../server'
-import { userFk } from '../../models/user.fake'
+import { userFk } from '../../models/userFake'
 import { encode } from '../middleware/jwt'
 import db from '../../database'
 use(dirtyChai)

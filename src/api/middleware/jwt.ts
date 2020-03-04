@@ -1,10 +1,10 @@
 import { Request, Response, NextFunction } from 'express'
-import { IUser, userSchema } from '../../models/user'
+import { User, userSchema } from '../../models/user'
 import { JWT_SECRET_KEY } from '../../config/constants'
 import { sign, verify as jwtVerify, decode as jwtDecode, JsonWebTokenError } from 'jsonwebtoken'
 
 export function jwtCheck (role?: Array<string>) {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction): void => {
     const bearer = req.get('Authorization') as string
     if (!bearer) throw new JsonWebTokenError('no found token')
     if (!bearer.match(/^Bearer [A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$/)) throw new JsonWebTokenError('bad format')
@@ -20,7 +20,7 @@ export function jwtCheck (role?: Array<string>) {
   }
 }
 
-export function encode (user: IUser) {
+export function encode (user: User): string {
   return sign({
     _key: user._key,
     role: user.role,
@@ -28,7 +28,7 @@ export function encode (user: IUser) {
   }, JWT_SECRET_KEY)
 }
 
-function verify (token: string) {
+function verify (token: string): string | object {
   console.log(JWT_SECRET_KEY)
   return jwtVerify(token, JWT_SECRET_KEY)
 }

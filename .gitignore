@@ -6,3 +6,7 @@ dist/
 .env.staging
 .env.production
 .env.test
+
+package-lock.json
+
+scrips/

@@ -1,11 +1,12 @@
 import { object, string, number, boolean, array } from 'joi'
 
-export interface IUser {
+export interface User {
+  _id?: string
   _key: string
   twitterId: string
   screenName: string
   description: string
-  role: 'god' | 'lookout' | 'hunter'
+  role: 'god' | 'lookout' | 'hunter' | 'novice'
 }
 
 export const userSchema = object({
