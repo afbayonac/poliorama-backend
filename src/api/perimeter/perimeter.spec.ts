@@ -1,4 +1,4 @@
- import { use, expect } from 'chai'
+import { use, expect } from 'chai'
 import { perimeterFk } from '../../models/perimeterFake'
 import db from '../../database'
 import dirtyChai from 'dirty-chai'
@@ -12,16 +12,15 @@ const agent = request.agent(server)
 describe('permieter', function () {
   let perimeter = perimeterFk()
 
-  before('database 🥑', async function () {
+  before('database 🥑 save perimeter', async function () {
     const collections = (await db.listCollections()).map((e: { name: string }) => e.name)
     const perimetersCollection = db.collection('perimeters')
     if (collections.indexOf('perimeters') === -1) await perimetersCollection.create()
     const res = await perimetersCollection.save(perimeter)
-    perimeter = { ...res, ...perimeterFk }
+    perimeter = { ...res, ...perimeter }
   })
 
   it('200 get perimeter by id', function (done) {
-    console.log(perimeter)
     agent
       .get(`/perimeter/${perimeter._key}`)
       .expect(200)
