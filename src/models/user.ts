@@ -6,6 +6,7 @@ export interface User {
   twitterId: string
   screenName: string
   description: string
+  picUrl: string
   role: 'god' | 'lookout' | 'hunter' | 'novice'
 }
 
@@ -14,5 +15,5 @@ export const userSchema = object({
   screenName: string().alphanum(),
   description: string().alphanum(),
   picUrl: string().uri(),
-  roles: string().valid(['god', 'lookout', 'Hunter'])
+  roles: string().valid(['god', 'lookout', 'Hunter', 'novice'])
 })

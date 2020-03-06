@@ -7,19 +7,20 @@ import { encode } from '../middleware/jwt'
 import db from '../../database'
 use(dirtyChai)
 
-const userA = userFk('novice')
-const userB = userFk('lookout')
-const userC = userFk('god')
-
 const agent = request.agent(server)
 
 describe('user', function () {
+
+  let userA = userFk('novice')
+  const userB = userFk('lookout')
+  const userC = userFk('god')
 
   before('database 🥑 save user', async function () {
     const collections = (await db.listCollections()).map((e: { name: string }) => e.name)
     const usersCollection = db.collection('users')
     if (collections.indexOf('users') === -1) await usersCollection.create()
-    await usersCollection.save(userA)
+    const res = await usersCollection.save(userA)
+   // userA = { ...userA, ...res }
   })
 
   it('200 get own user by id', function (done) {
@@ -31,9 +32,9 @@ describe('user', function () {
         const user = body
         expect(err).to.be.null()
         expect(user).to.have.property('_key', userA._key)
-        expect(user).to.have.property('userName', userA._key)
-        expect(user).to.have.property('pic', userA.picUrl)
-        expect(user).to.have.property('description', userC.description)
+        expect(user).to.have.property('screenName', userA.screenName)
+        expect(user).to.have.property('picUrl', userA.picUrl)
+        expect(user).to.have.property('description', userA.description)
         expect(user).to.have.property('role', userA.role)
         done()
       })
@@ -48,9 +49,9 @@ describe('user', function () {
         const user = body
         expect(err).to.be.null()
         expect(user).to.have.property('_key', userA._key)
-        expect(user).to.have.property('userName', userA._key)
-        expect(user).to.have.property('pic', userA.picUrl)
-        expect(user).to.have.property('description', userC.description)
+        expect(user).to.have.property('screenName', userA.screenName)
+        expect(user).to.have.property('picUrl', userA.picUrl)
+        expect(user).to.have.property('description', userA.description)
         expect(user).to.have.property('role', userA.role)
         done()
       })

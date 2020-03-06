@@ -7,6 +7,8 @@ import oauth from './api/oauth/oauth'
 import user from './api/user/user'
 import perimeter from './api/perimeter/perimeter'
 
+import errorHandler from './api/middleware/errorhandler'
+
 import { DATABASE_NAME } from './config/constants'
 
 // TODO: limit origins
@@ -33,15 +35,12 @@ class App {
     this.app.use('/oauth', oauth)
     this.app.use('/user', user)
     this.app.use('/perimeter', perimeter)
-    this.app.use('/', (_, res: Response) => {
-      res
-        .status(200)
-        .json({ message: 'Poliorama API REST is running' })
-    })
+    this.app.use('/', (_, res: Response) => res.status(200).json({ message: 'Poliorama API REST is running' }))
+    this.app.use(errorHandler)
     this.configClientDatabase()
   }
 
-  private async configClientDatabase () {
+  private async configClientDatabase (): Promise<void> {
     try {
       const list = await db.listDatabases()
       if (list.indexOf(DATABASE_NAME) === -1) await db.createDatabase(DATABASE_NAME)
@@ -49,7 +48,6 @@ class App {
 
       // get list collections
       const listCollections = (await db.listCollections()).map((e: {name: string}) => e.name)
-      console.log(listCollections)
 
       // create user collection
       const users = db.collection('users')

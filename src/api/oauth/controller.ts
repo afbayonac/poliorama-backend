@@ -27,8 +27,6 @@ export const oauthTwitterVerify = async (req: Request, res: Response): Promise<R
     const oauthVerifier = req.body.oauthVerifier
     const data = await getAccessToken(oauthToken, oauthTokenSecret, oauthVerifier)
 
-    console.info(data)
-
     const profile = await getVerifyCredentials(
       data.oauth_token as string,
       data.oauth_token_secret as string,
