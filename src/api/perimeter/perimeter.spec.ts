@@ -40,8 +40,7 @@ describe('permieter', function () {
       .expect(404)
       .end((err, { body }) => {
         expect(err).to.be.null()
-        expect(body)
-          .to.have.property('message', 'resource no found')
+        expect(body).to.have.property('message', 'resource no found')
         done()
       })
   })

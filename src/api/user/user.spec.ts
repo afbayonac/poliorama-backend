@@ -10,8 +10,7 @@ use(dirtyChai)
 const agent = request.agent(server)
 
 describe('user', function () {
-
-  let userA = userFk('novice')
+  const userA = userFk('novice')
   const userB = userFk('lookout')
   const userC = userFk('god')
 
@@ -19,8 +18,7 @@ describe('user', function () {
     const collections = (await db.listCollections()).map((e: { name: string }) => e.name)
     const usersCollection = db.collection('users')
     if (collections.indexOf('users') === -1) await usersCollection.create()
-    const res = await usersCollection.save(userA)
-   // userA = { ...userA, ...res }
+    await usersCollection.save(userA)
   })
 
   it('200 get own user by id', function (done) {
@@ -53,6 +51,19 @@ describe('user', function () {
         expect(user).to.have.property('picUrl', userA.picUrl)
         expect(user).to.have.property('description', userA.description)
         expect(user).to.have.property('role', userA.role)
+        done()
+      })
+  })
+
+  it('404 get user by id with permission', function (done) {
+    agent
+      .get('/user/somestring')
+      .set('Authorization', `Bearer ${encode(userC)}`)
+      .expect(404)
+      .end((err, { body }: Response) => {
+        const user = body
+        expect(err).to.be.null()
+        expect(user).to.have.property('message', 'resource no found')
         done()
       })
   })

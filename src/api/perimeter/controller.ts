@@ -1,15 +1,13 @@
 import db from '../../database'
-import { Request, Response } from 'express'
+import { RequestHandler } from 'express'
 
-export const getPerimeter = async (req: Request, res: Response): Promise<Response> => {
+const perimetersCollection = db.collection('perimeters')
+
+export const getPerimeter: RequestHandler = async (req, res, next) => {
+  // TODO: validate params
   const key = req.params.id
   try {
-    const perimeter = await db.collection('perimeters').document(key)
+    const perimeter = await perimetersCollection.document(key)
     return res.status(200).json(perimeter)
-  } catch (e) {
-    if (e.isArangoError && e.code === 404) {
-      return res.status(404).json({ message: 'resource no found' })
-    }
-    throw e
-  }
+  } catch (e) { next(e) }
 }

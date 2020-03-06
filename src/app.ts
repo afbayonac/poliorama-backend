@@ -1,4 +1,4 @@
-import express, { Application, Response, Request } from 'express'
+import express, { Application, Response } from 'express'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 
