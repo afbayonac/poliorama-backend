@@ -6,7 +6,6 @@ import db from './database'
 import oauth from './api/oauth/oauth'
 import user from './api/user/user'
 import perimeter from './api/perimeter/perimeter'
-
 import errorHandler from './api/middleware/errorhandler'
 
 import { DATABASE_NAME } from './config/constants'
