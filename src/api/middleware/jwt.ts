@@ -29,9 +29,12 @@ export function jwtCheck (role?: Array<string>) {
 }
 
 export function encode (user: User): string {
+  // TODO: verify the exp time
   return sign({
     _key: user._key,
     role: user.role,
+    screenName: user.screenName,
+    picUrl: user.picUrl,
     exp: Math.floor(Date.now() / 1000) + (3600)
   }, JWT_SECRET_KEY)
 }
