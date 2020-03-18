@@ -54,7 +54,7 @@ async function upsertUser (u: any): Promise<User> {
         description: ${u.description},
         verified: ${u.verified},
         defaultProfileImage: ${u.default_profile_image},
-        pic: ${u.profile_image_url_https},
+        picUrl: ${u.profile_image_url_https},
         permissions: {
           archive: true,
           validate: true
@@ -65,7 +65,7 @@ async function upsertUser (u: any): Promise<User> {
         description: ${u.description},
         verified: ${u.verified},
         defaultProfileImage: ${u.default_profile_image},
-        pic: ${u.profile_image_url_https}
+        picUrl: ${u.profile_image_url_https}
       } IN users
       RETURN NEW
   `)
