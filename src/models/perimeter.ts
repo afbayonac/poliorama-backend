@@ -1,17 +1,26 @@
-import { string, object } from "joi";
-
 export interface Perimeter {
   _id?: string
   _key?: string
-  picUrl: string
+  picUrl?: string
   name: string
   lastName: string
   birth?: Date
+  twiter?: string
   description: string
-  academic?: any
-  // business?: NOTE: any[] the companys can be change of onwers in the time how handle that ?
+  academic?: Academic
   charges?: Charge[]
   campaigns?: any[]
+  verify: boolean
+  // business?: NOTE: any[] the companys can be change of onwers in the time how handle that ?
+}
+
+export interface Academic {
+  bachiller?: any
+  tecnoligico?: any
+  Profecional?: any
+  especializacion?: any
+  maestria?: any
+  doctorado?: any
 }
 
 export interface Charge {

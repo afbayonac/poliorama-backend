@@ -16,7 +16,10 @@
     "full-trace": false
   },
   "nodemonConfig": {
-    "ignore": ["*.spec.*", "*.spec.*"],
+    "ignore": [
+      "*.spec.*",
+      "*.spec.*"
+    ],
     "delay": "2500"
   },
   "repository": {

@@ -7,7 +7,7 @@ export interface User {
   screenName: string
   description: string
   picUrl: string
-  role: 'god' | 'lookout' | 'hunter' | 'novice'
+  role: 'god' | 'watchmen' | 'hunter' | 'novice'
 }
 
 export const userSchema = object({
@@ -15,5 +15,5 @@ export const userSchema = object({
   screenName: string().alphanum(),
   description: string().alphanum(),
   picUrl: string().uri(),
-  roles: string().valid(['god', 'lookout', 'Hunter', 'novice'])
+  roles: string().valid(['god', 'watchmen', 'Hunter', 'novice'])
 })

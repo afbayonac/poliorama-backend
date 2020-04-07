@@ -12,11 +12,11 @@ API REST of Poliorama, project per data visualization about politics structures 
 
 ### Source Structure
 
-    └───dist
+    └───dist................................ traspiled files
     └───logs
     └───node_modules
     └───src
-        └───config
+        └───config.......................... eviroments varibles
         └───api 
         │   └───components
         │   │   └───user
@@ -26,10 +26,34 @@ API REST of Poliorama, project per data visualization about politics structures 
         └───services
         │   server.ts
         
+### users and permissions
+```
+ guest
+    - this are users not logged into the platform
+ 
+ watchmen 
+    - this users has the work to verify the data but yet can add data
+
+ novices
+   - are users without permissions to add or verify data, 
+   are waiting verifications or was verificated as dangerous
+ 
+ hunters
+    - this users collect informacion 
+```
+
 ### Contributing
 
 For contributions please follow  [the guide commits][6], the 
 [a successful git branching model][7] and [TypeDoc][8]
+
+#### Database
+
+docker run -e ARANGO_NO_AUTH=1 -d --name polioramadb-no-auth arangodb -p 8529:8529
+
+#### Run test
+
+``` npm test ```
  
 ### Author
 
