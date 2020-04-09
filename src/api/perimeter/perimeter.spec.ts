@@ -62,7 +62,7 @@ describe('permieter', function () {
         .send({
           name: fk.name.firstName(),
           lastName: fk.name.lastName(),
-          bird: fk.date.between('01/01/1920', '01/01/1950'),
+          bird: fk.date.between('01/01/1920', '01/01/1950').getMilliseconds(),
           description: fk.lorem.paragraph(10),
           twiter: 'elgatopolitico'
         })
@@ -82,7 +82,7 @@ describe('permieter', function () {
         .send({
           name: fk.name.firstName(),
           lastName: fk.name.lastName(),
-          bird: fk.date.between('01/01/1920', '01/01/1950'),
+          bird: fk.date.between('01/01/1920', '01/01/1950').getMilliseconds(),
           description: fk.lorem.paragraph(10),
           twiter: 'elgatopolitico'
         })
@@ -104,6 +104,18 @@ describe('permieter', function () {
         .end((err, { body }) => {
           expect(err).to.be.null()
           expect(body).to.have.property('message', 'perimeter deleted')
+          done()
+        })
+    })
+
+    it('404', function (done) {
+      agent
+        .delete(`/perimeter/${fk.random.words(1)}`)
+        .set('Authorization', `Bearer ${encode(userGood)}`)
+        .expect(404)
+        .end((err, { body }) => {
+          expect(err).to.be.null()
+          expect(body).to.have.property('message', 'resource no found')
           done()
         })
     })

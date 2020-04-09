@@ -4,9 +4,10 @@ export interface Perimeter {
   picUrl?: string
   name: string
   lastName: string
-  birth?: Date
+  birth?: number
   twiter?: string
   description: string
+  createDate: number
   academic?: Academic
   charges?: Charge[]
   campaigns?: any[]

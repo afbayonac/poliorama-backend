@@ -32,7 +32,8 @@ export const perimeterFk = (): Perimeter => {
     twiter: 'elgatopolitico',
     name: fk.name.firstName(),
     lastName: fk.name.lastName(),
-    birth: fk.date.between('01/01/1920', '01/01/2003'),
+    birth: fk.date.between('01/01/1920', '01/01/2003').getMilliseconds(),
+    createDate: Date.now(),
     description: fk.lorem.paragraph(10),
     verify: true,
     academic: {
