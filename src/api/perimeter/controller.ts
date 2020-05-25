@@ -29,18 +29,20 @@ export const getPerimeters: RequestHandler = async (req, res, next) => {
 }
 
 export const createPerimeter: RequestHandler = async (req, res, next) => {
-  const cursor = await db.query(aql`
-    INSERT {
-      name: ${req.body.name},
-      lastname: ${req.body.lastName}
-    } IN perimeters
-    RETURN NEW
-  `)
-  const data = await cursor.all()
-  res.status(200).json({
-    message: 'perimeter created',
-    perimeter: data
-  })
+  try {
+    const cursor = await db.query(aql`
+      INSERT {
+        name: ${req.body.name},
+        lastname: ${req.body.lastName}
+      } IN perimeters
+      RETURN NEW
+    `)
+    const data = await cursor.all()
+    res.status(200).json({
+      message: 'perimeter created',
+      perimeter: data
+    })
+  } catch (e) { next(e) }
 }
 
 export const deletePerimeter: RequestHandler = async (req, res, next) => {

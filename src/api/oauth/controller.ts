@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { RequestHandler } from 'express'
 import { getAccessToken, getRequestToken, getVerifyCredentials } from '../../services/twiter'
 import oauthStoreTemporal from '../../services/oauthStoreTemporal'
 import db from '../../database'
@@ -10,17 +10,17 @@ import { User } from '../../models/user'
 // TODO: handler errors
 // TODO: validate body
 
-export const oauthTwitter = async (req: Request, res: Response): Promise<Response> => {
+export const oauthTwitter: RequestHandler = async (req, res, next) => {
   try {
     const data = await getRequestToken()
     await oauthStoreTemporal.set(data.oauth_token as string, data.oauth_token_secret, 10000)
     return res.status(200).json({ oauthToken: data.oauth_token })
   } catch (e) {
-    return res.status(500).json({ message: 'internal Error server' })
+    next(e)
   }
 }
 
-export const oauthTwitterVerify = async (req: Request, res: Response): Promise<Response> => {
+export const oauthTwitterVerify: RequestHandler = async (req, res, next) => {
   try {
     const oauthToken = req.body.oauthToken
     const oauthTokenSecret = await oauthStoreTemporal.get(oauthToken)
@@ -39,7 +39,7 @@ export const oauthTwitterVerify = async (req: Request, res: Response): Promise<R
     if (e.isAxiosError && e.response.status === 401) {
       return res.status(401).json({ message: 'Authorization Required' })
     }
-    throw e
+    next(e)
   }
 }
 

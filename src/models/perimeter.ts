@@ -5,28 +5,39 @@ export interface Perimeter {
   name: string
   lastName: string
   birth?: number
-  twiter?: string
+  twitter?: string
   description: string
   createDate: number
-  academic?: Academic
+  academic?: Academic[]
   charges?: Charge[]
-  campaigns?: any[]
+  campaigns?: Campaing[]
   verify: boolean
   // business?: NOTE: any[] the companys can be change of onwers in the time how handle that ?
 }
 
 export interface Academic {
-  bachiller?: any
-  tecnoligico?: any
-  Profecional?: any
-  especializacion?: any
-  maestria?: any
-  doctorado?: any
+  entity: string
+  type: 'tegnico'| 'tecnologico' | 'pregrado' | 'maestria' | 'doctorado'
+  title: string
+  date: Date
+  support?: string
+  verify: boolean
 }
 
 export interface Charge {
   title: string
+  functionary: boolean // True if is a charge governmental
   dateStarted: Date
   dateEnd?: Date
-  functionary: boolean // Tru if is a charge governmental
+  support?: string
+  verify: boolean
+}
+
+export interface Campaing {
+  charge: string
+  date: Date
+  mount: number
+  elected: boolean
+  support?: string
+  verify: boolean
 }

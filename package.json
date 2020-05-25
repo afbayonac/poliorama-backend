@@ -8,7 +8,7 @@
     "build:staging": "NODE_ENV=staging tsc",
     "build": "NODE_ENV=prodcution tsc",
     "test": "NODE_ENV=test mocha -r ts-node/register ./src/**/*.spec.ts",
-    "deploy:dev": ""
+    "deploy:stagingipy": ""
   },
   "mocha": {
     "exit": true,
