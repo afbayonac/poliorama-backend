@@ -12,6 +12,7 @@ export interface Perimeter {
   charges?: Charge[]
   campaigns?: Campaing[]
   verify: boolean
+  organizations: OrganizationRef[]
   // business?: NOTE: any[] the companys can be change of onwers in the time how handle that ?
 }
 
@@ -40,4 +41,8 @@ export interface Campaing {
   elected: boolean
   support?: string
   verify: boolean
+}
+
+export interface OrganizationRef {
+  _key?: string
 }
