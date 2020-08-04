@@ -13,7 +13,7 @@ export enum Status {
   REVIEW = 'review',
   BLOCKED = 'blocked',
   REGULAR = 'regular',
-  BANNED = 'BANNED',
+  BANNED = 'banned',
 }
 
 export enum Role {
