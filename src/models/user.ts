@@ -5,13 +5,20 @@ export interface User {
   screenName: string
   description: string
   picUrl: string
-  role: 'god' | 'watchmen' | 'hunter' | 'novice'
-  status: statusUser
+  role: Role
+  status: Status
 }
 
-export enum statusUser {
-  review = 'REVIEW',
-  block = 'BLOCK',
-  regular = 'REGULAR',
-  banned = 'BANNED',
+export enum Status {
+  REVIEW = 'review',
+  BLOCKED = 'blocked',
+  REGULAR = 'regular',
+  BANNED = 'BANNED',
+}
+
+export enum Role {
+  GOD = 'god',
+  WATCHMEN = 'watchmen',
+  HUNTER = 'hunter',
+  NOVICE = 'novice',
 }

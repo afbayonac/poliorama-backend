@@ -44,16 +44,17 @@ API REST of Poliorama, project per data visualization about politics structures 
 
 ### Contributing
 
-For contributions please follow  [the guide commits][6], the 
-[a successful git branching model][7] and [TypeDoc][8]
+For contributions please follow  [the guide commits][6], the [a successful git branching model][7] and [TypeDoc][8]
 
 #### Database
 
-docker run -e ARANGO_NO_AUTH=1 -d --name polioramadb-no-auth arangodb -p 8529:8529
+local deploy:
+
+` docker run -e ARANGO_NO_AUTH=1 -d --name polioramadb-no-auth arangodb -p 8529:8529 `
 
 #### Run test
 
-``` npm test ```
+` npm test `
  
 ### Author
 

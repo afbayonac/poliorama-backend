@@ -7,6 +7,9 @@ dist/
 .env.production
 .env.test
 
+
 package-lock.json
 
-scripts/
+src/scripts/
+
+DEPLOY_NOTES.md
