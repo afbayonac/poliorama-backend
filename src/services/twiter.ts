@@ -9,7 +9,7 @@ import { TWITTER_API_KEY, TWITTER_API_SECRET_KEY, TWITTER_CALLBACK } from '../co
 const oauth = new OAuth({
   consumer: { key: TWITTER_API_KEY, secret: TWITTER_API_SECRET_KEY },
   signature_method: 'HMAC-SHA1', // eslint-disable-line @typescript-eslint/camelcase
-  hash_function: (base: string, key: any) => { // eslint-disable-line @typescript-eslint/camelcase
+  hash_function: (base: string, key: string): string => { // eslint-disable-line @typescript-eslint/camelcase
     return crypto
       .createHmac('sha1', key)
       .update(base)
@@ -18,7 +18,7 @@ const oauth = new OAuth({
 })
 
 // get request token { oauth_token and oauth token secret } the last should be save in server
-export const getRequestToken = async () => {
+export const getRequestToken = async (): Promise<querystring.ParsedUrlQuery> => {
   const request: { method: Method, data: any, url: string } = {
     method: 'POST',
     data: { oauth_callback: TWITTER_CALLBACK }, // eslint-disable-line @typescript-eslint/camelcase
@@ -30,11 +30,16 @@ export const getRequestToken = async () => {
     url: request.url,
     headers: oauth.toHeader(oauth.authorize(request))
   })
+
   return querystring.decode(response.data)
 }
 
 // get the access_token twitter
-export const getAccessToken = async (oauthToken: string, oauthTokenSecret: string, oauthVerifier: string) => {
+export const getAccessToken = async (
+  oauthToken: string,
+  oauthTokenSecret: string,
+  oauthVerifier: string
+): Promise<querystring.ParsedUrlQuery> => {
   const request: { method: Method, data: any, url: string } = {
     url: 'https://api.twitter.com/oauth/access_token',
     method: 'POST',
@@ -53,7 +58,11 @@ export const getAccessToken = async (oauthToken: string, oauthTokenSecret: strin
 }
 
 // TODO: add terms of service url for get the email and verify if the user verified that
-export const getVerifyCredentials = async (tokenKey: string, tokenSecret: string, screenName: string) => {
+export const getVerifyCredentials = async (
+  tokenKey: string,
+  tokenSecret: string,
+  screenName: string
+): Promise<Twitter.ResponseData> => {
   const client = new Twitter({
     consumer_key: TWITTER_API_KEY, // eslint-disable-line @typescript-eslint/camelcase
     consumer_secret: TWITTER_API_SECRET_KEY, // eslint-disable-line @typescript-eslint/camelcase

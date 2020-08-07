@@ -3,7 +3,7 @@ import { config } from 'dotenv'
 // load environment variables
 const NODE_ENV = process.env.NODE_ENV || 'local'
 
-config({ path: `${__dirname}/../../.env.${process.env.NODE_ENV}` })
+config({ path: `${__dirname}/../../.env.${NODE_ENV}` })
 
 const env = process.env
 export const PORT: number = Number(env.PORT) || 5000
