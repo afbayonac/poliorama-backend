@@ -5,10 +5,10 @@
   "main": "./src/server.ts",
   "scripts": {
     "start": "NODE_ENV=development DEBUG=poliorama:* nodemon",
-    "build:staging": "NODE_ENV=staging tsc",
+    "start:production": "pm2 ",
+    "build:production": "NODE_ENV=production tsc",
     "build": "NODE_ENV=prodcution tsc",
-    "test": "NODE_ENV=test mocha -r ts-node/register ./src/**/*.spec.ts",
-    "deploy:stagingipy": ""
+    "test": "NODE_ENV=test mocha -r ts-node/register ./src/**/*.spec.ts"
   },
   "mocha": {
     "exit": true,

@@ -12,7 +12,7 @@ export interface Perimeter {
   charges?: Charge[]
   campaigns?: Campaing[]
   verify: boolean
-  organizations: OrganizationRef[]
+  organizations?: OrganizationRef[]
   // business?: NOTE: any[] the companys can be change of onwers in the time how handle that ?
 }
 

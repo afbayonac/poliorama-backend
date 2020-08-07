@@ -1,5 +1,6 @@
 import { use, expect } from 'chai'
 import { perimeterFk } from '../../models/perimeterFake'
+import { Role } from '../../models/user'
 import db from '../../database'
 import dirtyChai from 'dirty-chai'
 import request from 'supertest'
@@ -14,9 +15,9 @@ const agent = request.agent(server)
 
 describe('permieter', function () {
   let perimeter = perimeterFk()
-  const userNovice = userFk('novice')
-  const userGood = userFk('god')
-  const userHunter = userFk('hunter')
+  const userNovice = userFk(Role.NOVICE)
+  const userGod = userFk(Role.GOD)
+  const userHunter = userFk(Role.HUNTER)
 
   // add perimeter test
   before('database 🥑 save perimeter', async function () {
@@ -99,7 +100,7 @@ describe('permieter', function () {
     it('200', function (done) {
       agent
         .delete(`/perimeter/${perimeter._key}`)
-        .set('Authorization', `Bearer ${encode(userGood)}`)
+        .set('Authorization', `Bearer ${encode(userGod)}`)
         .expect(200)
         .end((err, { body }) => {
           expect(err).to.be.null()
@@ -111,7 +112,7 @@ describe('permieter', function () {
     it('404', function (done) {
       agent
         .delete(`/perimeter/${fk.random.words(1)}`)
-        .set('Authorization', `Bearer ${encode(userGood)}`)
+        .set('Authorization', `Bearer ${encode(userGod)}`)
         .expect(404)
         .end((err, { body }) => {
           expect(err).to.be.null()

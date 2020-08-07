@@ -3,6 +3,8 @@ import dirtyChai from 'dirty-chai'
 import request, { Response } from 'supertest'
 import server from '../../server'
 import { userFk } from '../../models/userFake'
+import { Role } from '../../models/user'
+
 import { encode } from '../middleware/jwt'
 import db from '../../database'
 use(dirtyChai)
@@ -10,9 +12,9 @@ use(dirtyChai)
 const agent = request.agent(server)
 
 describe('user', function () {
-  const userNovice = userFk('novice')
-  const userWatchmen = userFk('watchmen')
-  const userGood = userFk('god')
+  const userNovice = userFk(Role.NOVICE)
+  const userWatchmen = userFk(Role.WATCHMEN)
+  const userGod = userFk(Role.GOD)
 
   before('database 🥑 save user', async function () {
     const collections = (await db.listCollections()).map((e: { name: string }) => e.name)
@@ -41,7 +43,7 @@ describe('user', function () {
   it('200 get user by id with permission', function (done) {
     agent
       .get(`/user/${userNovice._key}`)
-      .set('Authorization', `Bearer ${encode(userGood)}`)
+      .set('Authorization', `Bearer ${encode(userGod)}`)
       .expect(200)
       .end((err, { body }: Response) => {
         const user = body
@@ -58,7 +60,7 @@ describe('user', function () {
   it('404 get user by id with permission', function (done) {
     agent
       .get('/user/somestring')
-      .set('Authorization', `Bearer ${encode(userGood)}`)
+      .set('Authorization', `Bearer ${encode(userGod)}`)
       .expect(404)
       .end((err, { body }: Response) => {
         const user = body
