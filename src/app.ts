@@ -8,7 +8,7 @@ import user from './api/user/user'
 import perimeter from './api/perimeter/perimeter'
 import errorHandler from './api/middleware/errorhandler'
 
-import { DATABASE_NAME } from './config/constants'
+import { DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD } from './config/constants'
 
 // TODO: limit origins
 const corsOption = {
@@ -41,6 +41,9 @@ class App {
 
   private async configClientDatabase (): Promise<void> {
     try {
+      // login database
+      db.useBasicAuth(DATABASE_USER, DATABASE_PASSWORD)
+
       const list = await db.listDatabases()
       if (list.indexOf(DATABASE_NAME) === -1) await db.createDatabase(DATABASE_NAME)
       db.useDatabase(DATABASE_NAME)

@@ -1,6 +1,6 @@
 import debug from 'debug'
 
-const polioramaLogger  = debug('poliorama')
+const polioramaLogger = debug('poliorama')
 
 const logger = {
   info: polioramaLogger.extend('info'),
