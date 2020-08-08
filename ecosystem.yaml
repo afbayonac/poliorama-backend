@@ -1,8 +1,10 @@
 apps:
-  - script : ./dist/app.js
+  - script : ./dist/server.js
     name   : 'poliorama-backend'
     watch  : true
     env    :
       NODE_ENV: development
+      DEBUG: poliorama:*
     env_production:
       NODE_ENV: production
+      DEBUG: poliorama:*

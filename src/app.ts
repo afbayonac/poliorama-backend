@@ -72,7 +72,7 @@ class App {
       console.log(e.errorNum)
       console.log(e.code)
       console.log(e.statusCode)
-      console.log(e.response)
+      // console.log(e.response)
     }
   }
 }
