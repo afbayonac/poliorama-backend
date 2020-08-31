@@ -1,26 +1,26 @@
 import { Router } from 'express'
-import { getPerimeter, getPerimeters, createPerimeter, deletePerimeter } from './controller'
+import { getSubject, getSubjects, createSubject, deleteSubject } from './controller'
 import { query, body } from 'express-validator'
 import { jwtCheck } from '../middleware/jwt'
 import validate from '../middleware/validate'
-import moment = require('moment')
+import moment from 'moment'
 
-const perimeterRouter = Router()
+const subjectRouter = Router()
 
-perimeterRouter.route('/:id')
-  .get(getPerimeter)
+subjectRouter.route('/:id')
+  .get(getSubject)
   .delete(
     jwtCheck(['god']),
-    deletePerimeter
+    deleteSubject
   )
 
-perimeterRouter.route('/')
+subjectRouter.route('/')
   .get(
     [
       query('limit').optional().isNumeric().toInt()
     ],
     validate,
-    getPerimeters)
+    getSubjects)
   .post(
     jwtCheck(['god', 'hunter', 'watchmen']),
     [
@@ -34,9 +34,9 @@ perimeterRouter.route('/')
         })
         .withMessage('from 1990 to now'),
       body('description').isString(),
-      body('twiter').optional().isString() // TODO valid with api 
+      body('twiter').optional().isString() // TODO valid with api
     ],
     validate,
-    createPerimeter)
+    createSubject)
 
-export default perimeterRouter
+export default subjectRouter

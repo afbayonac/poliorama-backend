@@ -5,7 +5,7 @@ import bodyParser from 'body-parser'
 import db from './database'
 import oauth from './api/oauth/oauth'
 import user from './api/user/user'
-import perimeter from './api/perimeter/perimeter'
+import subject from './api/subject/subject'
 import errorHandler from './api/middleware/errorhandler'
 
 import { DATABASE_NAME, DATABASE_USER, DATABASE_PASSWORD } from './config/constants'
@@ -33,7 +33,7 @@ class App {
     this.app.use(cors(corsOption)) // TODO: this should be limit in production
     this.app.use('/oauth', oauth)
     this.app.use('/user', user)
-    this.app.use('/perimeter', perimeter)
+    this.app.use('/subject', subject)
     this.app.use('/', (_, res: Response) => res.status(200).json({ message: 'Poliorama API REST is running' }))
     this.app.use(errorHandler)
     this.configClientDatabase()
@@ -55,12 +55,12 @@ class App {
       const users = db.collection('users')
       if (listCollections.indexOf('users') === -1) await users.create()
 
-      // create perimeter collection
-      const perimeters = db.collection('perimeters')
-      if (listCollections.indexOf('perimeters') === -1) await perimeters.create()
-      perimeters.createFulltextIndex(['name'], 3)
-      perimeters.createFulltextIndex(['description'], 3)
-      perimeters.createFulltextIndex(['lastName'], 3)
+      // create subject collection
+      const subjects = db.collection('subjects')
+      if (listCollections.indexOf('subjects') === -1) await subjects.create()
+      subjects.createFulltextIndex(['name'], 3)
+      subjects.createFulltextIndex(['description'], 3)
+      subjects.createFulltextIndex(['lastName'], 3)
 
       // get list edges collections
       const relations = db.edgeCollection('relations')

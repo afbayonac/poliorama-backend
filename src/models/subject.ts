@@ -1,4 +1,4 @@
-export interface Perimeter {
+export interface Subject {
   _id?: string
   _key?: string
   picUrl?: string

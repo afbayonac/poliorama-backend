@@ -1,4 +1,4 @@
-import { Perimeter, Charge, Campaing, Academic } from './perimeter'
+import { Subject, Charge, Campaing, Academic } from './subject'
 import fk from 'faker'
 
 const academicFk = (): Academic => ({
@@ -31,7 +31,7 @@ const chargesFk = (): Charge => {
 
 // the companys camby chabge of owners in the time how h
 
-export const perimeterFk = (): Perimeter => {
+export const subjectFk = (): Subject => {
   return {
     picUrl: fk.image.avatar(),
     twitter: 'elgatopolitico',

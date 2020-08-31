@@ -1,5 +1,5 @@
 import { use, expect } from 'chai'
-import { perimeterFk } from '../../models/perimeterFake'
+import { subjectFk } from '../../models/subjectFake'
 import { Role } from '../../models/user'
 import db from '../../database'
 import dirtyChai from 'dirty-chai'
@@ -14,38 +14,38 @@ use(dirtyChai)
 const agent = request.agent(server)
 
 describe('permieter', function () {
-  let perimeter = perimeterFk()
+  let subject = subjectFk()
   const userNovice = userFk(Role.NOVICE)
   const userGod = userFk(Role.GOD)
   const userHunter = userFk(Role.HUNTER)
 
-  // add perimeter test
-  before('database 🥑 save perimeter', async function () {
+  // add subject test
+  before('database 🥑 save subject', async function () {
     const collections = (await db.listCollections()).map((e: { name: string }) => e.name)
-    const perimetersCollection = db.collection('perimeters')
-    if (collections.indexOf('perimeters') === -1) await perimetersCollection.create()
-    const res = await perimetersCollection.save(perimeter)
-    perimeter = { ...res, ...perimeter }
+    const subjectsCollection = db.collection('subjects')
+    if (collections.indexOf('subjects') === -1) await subjectsCollection.create()
+    const res = await subjectsCollection.save(subject)
+    subject = { ...res, ...subject }
   })
 
-  describe('get perimeter by id', function () {
+  describe('get subject by id', function () {
     it('200', function (done) {
       agent
-        .get(`/perimeter/${perimeter._key}`)
+        .get(`/subject/${subject._key}`)
         .expect(200)
         .end((err, { body }) => {
           expect(err).to.be.null()
-          expect(body).to.have.property('_id', perimeter._id)
-          expect(body).to.have.property('_key', perimeter._key)
-          expect(body).to.have.property('name', perimeter.name)
-          expect(body).to.have.property('lastName', perimeter.lastName)
+          expect(body).to.have.property('_id', subject._id)
+          expect(body).to.have.property('_key', subject._key)
+          expect(body).to.have.property('name', subject.name)
+          expect(body).to.have.property('lastName', subject.lastName)
           done()
         })
     })
 
     it('404', function (done) {
       agent
-        .get('/perimeter/somestring')
+        .get('/subject/somestring')
         .expect(404)
         .end((err, { body }) => {
           expect(err).to.be.null()
@@ -55,10 +55,10 @@ describe('permieter', function () {
     })
   })
 
-  describe('create perimeter', function () {
+  describe('create subject', function () {
     it('200', function (done) {
       agent
-        .post('/perimeter')
+        .post('/subject')
         .set('Authorization', `Bearer ${encode(userHunter)}`)
         .send({
           name: fk.name.firstName(),
@@ -70,15 +70,15 @@ describe('permieter', function () {
         .expect(200)
         .end((err, { body }) => {
           expect(err).to.be.null()
-          expect(body).to.have.property('message', 'perimeter created')
-          expect(body).to.have.property('perimeter')
+          expect(body).to.have.property('message', 'subject created')
+          expect(body).to.have.property('subject')
           done()
         })
     })
 
     it('401', function (done) {
       agent
-        .post('/perimeter')
+        .post('/subject')
         .set('Authorization', `Bearer ${encode(userNovice)}`)
         .send({
           name: fk.name.firstName(),
@@ -96,22 +96,22 @@ describe('permieter', function () {
     })
   })
 
-  describe('delete perimeter', function () {
+  describe('delete subject', function () {
     it('200', function (done) {
       agent
-        .delete(`/perimeter/${perimeter._key}`)
+        .delete(`/subject/${subject._key}`)
         .set('Authorization', `Bearer ${encode(userGod)}`)
         .expect(200)
         .end((err, { body }) => {
           expect(err).to.be.null()
-          expect(body).to.have.property('message', 'perimeter deleted')
+          expect(body).to.have.property('message', 'subject deleted')
           done()
         })
     })
 
     it('404', function (done) {
       agent
-        .delete(`/perimeter/${fk.random.words(1)}`)
+        .delete(`/subject/${fk.random.words(1)}`)
         .set('Authorization', `Bearer ${encode(userGod)}`)
         .expect(404)
         .end((err, { body }) => {
@@ -123,7 +123,7 @@ describe('permieter', function () {
 
     it('401', function (done) {
       agent
-        .delete(`/perimeter/${perimeter._key}`)
+        .delete(`/subject/${subject._key}`)
         .set('Authorization', `Bearer ${encode(userHunter)}`)
         .expect(401)
         .end((err, { body }) => {
@@ -135,7 +135,7 @@ describe('permieter', function () {
 
     it('401', function (done) {
       agent
-        .delete(`/perimeter/${perimeter._key}`)
+        .delete(`/subject/${subject._key}`)
         .set('Authorization', `Bearer ${encode(userNovice)}`)
         .expect(401)
         .end((err, { body }) => {
