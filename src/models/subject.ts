@@ -18,7 +18,7 @@ export interface Subject {
 
 export interface Academic {
   entity: string
-  type: 'tegnico'| 'tecnologico' | 'pregrado' | 'maestria' | 'doctorado'
+  type: 'tecnico'| 'tecnologico' | 'pregrado' | 'maestria' | 'doctorado'
   title: string
   date: Date
   support?: string
